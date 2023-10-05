@@ -7,4 +7,4 @@ covered below features
 4. can delete issue, image and comment
 5. issue feed with rich filters
 
-Demo demo.issutracker.xyz
+Demo http://demo.issutracker.xyz
