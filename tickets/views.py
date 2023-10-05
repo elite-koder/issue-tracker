@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse, QueryDict
 from django.shortcuts import render, redirect
@@ -6,6 +8,8 @@ from comments.services import CommentService
 from projects.services import ProjectService
 from tickets.services import TicketService
 
+
+logger = logging.getLogger(__name__)
 
 @login_required
 def tickets_view(request):
@@ -36,20 +40,18 @@ def tickets_view(request):
                 TicketService().create_new_ticket(request.user, request.POST["title"].strip(), request.POST["desc"].strip(), request.POST['project_id'], request.FILES.getlist("files[]"))
             resp_data["error"] = False
             resp_data["msg"] = "Hurrah!!! Created Issue Successfully"
-        except Exception as e:
-            print(e)
+        except:
+            logger.exception("error when creating ticket")
             resp_data["error"] = True
             resp_data["msg"] = "Hiss!!! Please try again after sometime"
-        print(resp_data)
         return JsonResponse(resp_data, status=200)
     elif request.method == "PATCH":
         data = {}
         try:
-            print(request.FILES)
-            # req_data = QueryDict(request.body)
-            # keys = ["title", "desc", "status", "priority", "project_id"]
-            # data = {key: req_data[key] for key in keys if key in req_data}
-            # TicketService().update_ticket(request.user, req_data["id"], data)
+            req_data = QueryDict(request.body)
+            keys = ["title", "desc", "status", "priority", "project_id"]
+            data = {key: req_data[key] for key in keys if key in req_data}
+            TicketService().update_ticket(request.user, req_data["id"], data)
             data['error'] = False
             data["msg"] = "Hurrah!!! Updated Successfully"
         except Exception as e:

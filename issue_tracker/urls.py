@@ -32,5 +32,6 @@ urlpatterns = [
     path("ticket/<int:ticket_id>/edit/view", ticket_edit_view, name="ticket_edit_view"),
     path("comments", comments_view, name="comments_view"),
     path("images", images_view, name="images_view"),
-    path("", redirect_to_home, name="redirect_to_home"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [path("", redirect_to_home, name="redirect_to_home")]
