@@ -35,7 +35,7 @@
         <label for="edit_issue_desc_input" class="col-form-label"><strong>Issue Details</strong></label>
         <textarea class="form-control" id="edit_issue_desc_input">{{ticket.desc}}</textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group overflow-auto" {% if ticket.images %}style="height: 120px;"{% endif %}>
         {% for img in ticket.images %}
         <img src="{{img.image.url}}" class="issue-image rounded float-left mt-2" style="width: 65px; cursor: pointer;" alt="{{img.filename}}">
         <button type="button" class="btn btm-sm btn-primary float-left" onclick="delete_image_func({{img.id}})"><i class="fa fa-trash"></i></button>
@@ -56,6 +56,7 @@
       <div class="form-group mt-3">
         <button type="button" class="btn btn-primary" id="issue_new_comment_btn">Comment</button>
       </div>
+      {% if comments %}
       <div class="form-group mt-3" style="height: 400px; overflow: auto;">
         {% for comment in comments %}
         <div class="row m-2">
@@ -72,6 +73,7 @@
         </div>
         {% endfor %}
       </div>
+      {% endif %}
     </form>
   </div>
 </div>
