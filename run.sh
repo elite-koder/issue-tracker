@@ -1,2 +1,2 @@
 export FABRIC=PROD
-./env/bin/gunicorn easy_todo.wsgi --access-logfile access.log --error-logfile error.log --capture-output --bind=127.0.0.1:8002
+./env/bin/gunicorn issue_tracker.wsgi --access-logfile access.log --error-logfile error.log --capture-output --bind=127.0.0.1:8002
