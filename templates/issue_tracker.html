@@ -84,7 +84,7 @@
     save_issue_changes(data);
   });
 
-  $('#EditIssueModal').on("change", '#edit_issue_statuses_dd', function() {
+  $('#EditIssueModal').on('change', '#edit_issue_statuses_dd', function() {
     data = {};
     data["status"] = $(this).val();
     save_issue_changes(data);
