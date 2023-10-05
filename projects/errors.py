@@ -1,0 +1,2 @@
+class DuplicateProjectError(Exception):
+    pass

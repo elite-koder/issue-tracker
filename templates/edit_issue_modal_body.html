@@ -1,0 +1,77 @@
+{% load humanize %}
+<div class="row">
+  <div class="col-4">
+    <form>
+      <input type="text" class="d-none" id="edit_modal_ticket_id" value="{{ticket.id}}" />
+      <div class="form-group">
+        <label for="edit_issue_title_input" class="col-form-label"><strong>Issue</strong></label>
+        <input type="text" class="form-control" value="{{ticket.title}}" id="edit_issue_title_input"></input>
+      </div>
+      <div class="form-group">
+        <label for="edit_issue_projects_dd" class="col-form-label"><strong>Projects</strong></label>
+        <select class="form-select" aria-label="Default select example" id="edit_issue_projects_dd">
+          {% for project in projects %}
+          <option value="{{project.id}}" {% if ticket.project_id == project.id %}selected{% endif %}>{{project.title}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="edit_issue_statuses_dd" class="col-form-label"><strong>Status</strong></label>
+        <select class="form-select" aria-label="Default select example" id="edit_issue_statuses_dd">
+          {% for status in statuses %}
+          <option value="{{status}}" {% if ticket.status == status %}selected{% endif %}>{{status}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="edit_issue_priorities_dd" class="col-form-label"><strong>Priority</strong></label>
+        <select class="form-select" aria-label="Default select example" id="edit_issue_priorities_dd">
+          {% for priority in priorities %}
+          <option value="{{priority}}" {% if ticket.priority == priority %}selected{% endif %}>{{priority}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="edit_issue_desc_input" class="col-form-label"><strong>Issue Details</strong></label>
+        <textarea class="form-control" id="edit_issue_desc_input">{{ticket.desc}}</textarea>
+      </div>
+      <div class="form-group">
+        {% for img in ticket.images %}
+        <img src="{{img.image.url}}" class="issue-image rounded float-left mt-2" style="width: 65px; cursor: pointer;" alt="{{img.filename}}">
+        <button type="button" class="btn btm-sm btn-primary float-left" onclick="delete_image_func({{img.id}})"><i class="fa fa-trash"></i></button>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        <label for="edit_issue_images_input" class="col-form-label"><strong>Images</strong></label>
+        <input class="form-control" type="file" id="edit_issue_images_input" multiple>
+      </div>
+    </form>
+  </div>
+  <div class="col-8">
+    <form>
+      <div class="form-group">
+        <label for="issue_comment_input" class="col-form-label"><strong>Comments</strong></label>
+        <textarea class="form-control" id="issue_comment_input" ></textarea>
+      </div>
+      <div class="form-group mt-3">
+        <button type="button" class="btn btn-primary" id="issue_new_comment_btn">Comment</button>
+      </div>
+      <div class="form-group mt-3" style="height: 400px; overflow: auto;">
+        {% for comment in comments %}
+        <div class="row m-2">
+          <div class="col-3 bg-warning">
+            <div>You</div>
+            <div>{{comment.created_at|naturaltime}}</div>
+          </div>
+          <div class="col-8 bg-light">
+            <div>{{comment.msg}}</div>
+          </div>
+          <div class="col-1">
+            <div><button type="button" class="btn btm-sm btn-primary" onclick="delete_comment_func({{comment.id}})"><i class="fa fa-trash"></i></button></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </form>
+  </div>
+</div>
